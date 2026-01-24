@@ -1,0 +1,91 @@
+<div class="accommodation-detail-container">
+  <app-header></app-header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="detail-wrapper">
+      <!-- Título -->
+      <h2 class="accommodation-title">{{ accommodation.title }}</h2>
+
+      <!-- Grid Layout -->
+      <div class="detail-grid">
+        <!-- Columna Izquierda: Carrusel de Imágenes -->
+        <div class="left-column">
+          <div class="images-section">
+            <div class="images-label">Images</div>
+            <p-carousel
+              [value]="accommodation.images"
+              [numVisible]="1"
+              [numScroll]="1"
+              [circular]="true"
+              [showNavigators]="true"
+              [showIndicators]="true"
+              [autoplayInterval]="0"
+            >
+              <ng-template let-image pTemplate="item">
+                <div class="carousel-image-wrapper">
+                  <img [src]="image.url" [alt]="image.alt" />
+                </div>
+              </ng-template>
+            </p-carousel>
+          </div>
+
+          <!-- Botón de Reserva -->
+          <div class="reserve-section">
+            <button pButton label="Reserva" icon="pi pi-calendar-plus" class="reserve-button" (click)="onReserve()"></button>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Información -->
+        <div class="right-column">
+          <div class="info-card">
+            <h3 class="info-title">{{ accommodation.location }}</h3>
+            <p class="info-subtitle">
+              {{ accommodation.bedrooms }} habitaciones - {{ accommodation.bathrooms }}
+            </p>
+
+            <!-- Líneas de información -->
+            <div class="info-line"></div>
+
+            <div class="info-section">
+              <div class="info-item">
+                <i class="pi pi-users"></i>
+                <span>Hasta {{ accommodation.guests }} huéspedes</span>
+              </div>
+              <div class="info-item">
+                <i class="pi pi-star-fill"></i>
+                <span>{{ accommodation.rating }} ({{ accommodation.reviews }} reseñas)</span>
+              </div>
+            </div>
+
+            <div class="info-line"></div>
+
+            <div class="description-section">
+              <h4>Descripción</h4>
+              <p>{{ accommodation.description }}</p>
+            </div>
+
+            <div class="info-line"></div>
+
+            <div class="amenities-section">
+              <h4>Comodidades</h4>
+              <div class="amenities-grid">
+                <div class="amenity-item" *ngFor="let amenity of accommodation.amenities">
+                  <i class="pi pi-check-circle"></i>
+                  <span>{{ amenity }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-line"></div>
+
+            <div class="price-section">
+              <span class="price-label">Precio por noche</span>
+              <span class="price-value">\${{ accommodation.price | number }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

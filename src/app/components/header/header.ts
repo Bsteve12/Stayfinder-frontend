@@ -53,7 +53,7 @@ export class Header implements OnInit {
     this.auth.currentUser$.subscribe((user: User | null) => {
       this.userRole = (user?.role as 'CLIENT' | 'OWNER' | 'ADMIN') || null;
       this.userName = user?.nombre || 'Usuario';
-      this.userPhoto = user?.foto || '';
+      '';
     });
   }
 

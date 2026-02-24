@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 export interface LoginRequest {
   email: string;
@@ -25,8 +26,9 @@ export interface User {
 })
 export class AuthService {
 
-  // ✅ URL CORRECTA DEL BACKEND
-  private apiUrl = 'https://stayfinder-backend-86433570710.us-central1.run.app/api/usuario';
+  //  URL CORRECTA DEL BACKEND
+  //private apiUrl = 'https://stayfinder-backend-86433570710.us-central1.run.app/api/usuario'; // Descomentar cuando ya estemos en produccion
+  private apiUrl = `${environment.apiUrl}/api/usuario`;
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   private currentUserSubject = new BehaviorSubject<User | null>(null);
@@ -51,7 +53,7 @@ export class AuthService {
     this.logout();
   }
 
-  // ✅ LOGIN CORRECTO
+  //  LOGIN CORRECTO
   login(credentials: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
       tap((response) => {
@@ -69,7 +71,7 @@ export class AuthService {
     );
   }
 
-  // ✅ REGISTRO CORRECTO
+  //  REGISTRO CORRECTO
   register(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}`, userData);
   }
@@ -82,6 +84,23 @@ export class AuthService {
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
+
+  // En auth.service.ts
+  forgotPassword(email: string): Observable<any> {
+    // Ajustamos el envío para que coincida con el RequestBody de tu Java
+    // Si tu DTO pide "email", envíalo así:
+    return this.http.post(`${environment.apiUrl}/api/auth/forgot-password`, { email: email });
+  }
+
+
+
+  resetPassword(token: string, nuevaPassword: string): Observable<any> {
+    // Ajuste para @RequestParam: enviamos los datos en la URL
+    const url = `${environment.apiUrl}/api/auth/reset-password?token=${token}&nuevaPassword=${nuevaPassword}`;
+    return this.http.post(url, {}); // Cuerpo vacío porque los datos van en la URL
+  }
+
+
 
   private buildUserFromToken(token: string): User | null {
     try {

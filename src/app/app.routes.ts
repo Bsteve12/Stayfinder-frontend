@@ -10,7 +10,7 @@ import { Anfitrion } from './anfitrion/anfitrion';
 import { Administrador } from './administrador/administrador';
 import { ConvertirseAnfitrion } from './convertirse-anfitrion/convertirse-anfitrion';
 import { InicioMiCuenta } from './inicio-mi-cuenta/inicio-mi-cuenta';
-
+import { ResetPassword } from './reset-password/reset-password';
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, // Ruta principal
   { path: 'inicio', component: Inicio },                  //  Página de inicio principal
@@ -24,4 +24,5 @@ export const routes: Routes = [
   { path: 'administrador', component: Administrador },
   { path: 'convertirse-anfitrion', component: ConvertirseAnfitrion },
   { path: 'inicio-mi-cuenta', component: InicioMiCuenta },
+  { path: 'reset-password', component: ResetPassword },
 ];
